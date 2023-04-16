@@ -30,20 +30,91 @@ resetBtn.addEventListener("click", reset);
 function reset() {
     gameOver = false;
     snake = [ {x : randomX(), y : randomY()} ];
-    dx = 0; dy = 0;
+    dx = TILE; dy = 0;
     food = undefined;
 }
+
+let touchControls = false;
+let controlSelectorBtn = document.getElementById("controlSelector")
+controlSelectorBtn.addEventListener("click", () => {
+    reset();
+    touchControls = !touchControls;
+    upBtn.disabled = !upBtn.disabled;
+    leftBtn.disabled = !leftBtn.disabled;
+    rightBtn.disabled = !rightBtn.disabled;
+    downBtn.disabled = !downBtn.disabled;
+    if (touchControls) {
+        controlSelectorBtn.textContent = "Touch";
+        upBtn.style.backgroundColor = "beige";
+        upBtn.style.color = "lightgray";
+        leftBtn.style.backgroundColor = "beige";
+        leftBtn.style.color = "lightgray";
+        rightBtn.style.backgroundColor = "beige";
+        rightBtn.style.color = "lightgray";
+        downBtn.style.backgroundColor = "beige";
+        downBtn.style.color = "lightgray";
+    } else {
+        controlSelectorBtn.textContent = "Buttons";
+        upBtn.style.backgroundColor = "burlywood";
+        upBtn.style.color = "black";
+        leftBtn.style.backgroundColor = "burlywood";
+        leftBtn.style.color = "black";
+        rightBtn.style.backgroundColor = "burlywood";
+        rightBtn.style.color = "black";
+        downBtn.style.backgroundColor = "burlywood";
+        downBtn.style.color = "black";
+    }
+})
 
 // Controls buttons
 let upBtn = document.getElementById("up");
 let leftBtn = document.getElementById("left");
 let rightBtn = document.getElementById("right");
 let downBtn = document.getElementById("down");
-
 upBtn.addEventListener("click", () => { if (dy != TILE) dy = -TILE; dx = 0; });
 leftBtn.addEventListener("click", () => { if (dx != TILE) dx = -TILE ; dy = 0; });
 rightBtn.addEventListener("click", () => { if (dx != -TILE) dx = TILE; dy = 0; });
 downBtn.addEventListener("click", () => { if (dy != -TILE) dy = TILE; dx = 0; });
+
+// Swipe possibilities : 
+let touchStartX;
+let touchStartY;
+let touchEndX;
+let touchEndY;
+document.addEventListener('touchstart', function(event) {
+    touchStartX = event.touches[0].clientX;
+    touchStartY = event.touches[0].clientY;
+});
+document.addEventListener('touchend', function(event) {
+    touchEndX = event.changedTouches[0].clientX;
+    touchEndY = event.changedTouches[0].clientY;
+});
+function getSwipeDirection(startX, startY, endX, endY) {
+    var deltaX = endX - startX;
+    var deltaY = endY - startY;
+    var absDeltaX = Math.abs(deltaX);
+    var absDeltaY = Math.abs(deltaY);
+    if (absDeltaX > absDeltaY && (absDeltaX > 10 || absDeltaY || 10)) {
+      return (deltaX < 0) ? 'left' : 'right';
+    } else {
+      return (deltaY < 0) ? 'up' : 'down';
+    }
+}
+function moveWithSwipes() {
+    if (touchControls) {
+        let direction = getSwipeDirection(touchStartX, touchStartY, touchEndX, touchEndY);
+        if ((direction === "left") && dx != TILE) {
+            dx = -TILE ; dy = 0;
+        } else if ((direction === "right") && dx != -TILE) {
+            dx = TILE; dy = 0; 
+        } else if ((direction === "up") && dy != TILE) {
+            dy = -TILE; dx = 0;
+        } else if ((direction === "down") && dy != -TILE) {
+            dy = TILE; dx = 0;
+        }
+    }
+    
+}
 
 // Game loop
 let lastTime = 0;
@@ -56,6 +127,7 @@ function main(time) {
         generateFood();
         drawFood();
         snakeMove();
+        moveWithSwipes();
         drawSnake();
         checkFoodCollides();
         checkGameOver();
