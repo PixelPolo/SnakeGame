@@ -17,6 +17,7 @@ body {
 button {
     background-color: burlywood;
     font-weight: bold;
+    color: black;
 }
 #start {
     padding: 10px;
