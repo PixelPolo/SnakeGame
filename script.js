@@ -55,8 +55,8 @@ function main(time) {
         updateSpeed();
         generateFood();
         drawFood();
-        drawSnake();
         snakeMove();
+        drawSnake();
         checkFoodCollides();
         checkGameOver();
         lastTime = time;
