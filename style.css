@@ -1,0 +1,35 @@
+
+body {
+    background-color: bisque;
+    font-family: Arial, Helvetica, sans-serif;      
+}
+
+.content {
+    margin: 50px 10%;
+    text-align: center;
+    color: black;
+}
+
+#canvas {
+    background-color: black;
+}
+
+button {
+    background-color: burlywood;
+    font-weight: bold;
+}
+#start {
+    padding: 10px;
+    width: 100px;
+    background-color: burlywood;
+}
+
+.controls{
+    padding: 10px;
+}
+
+.controls button {
+    width: 60px;
+    height: 40px;
+    margin: 5px;
+}
