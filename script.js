@@ -228,7 +228,7 @@ function drawScore() {
 }
 
 function updateSpeed() {
-    if (snake.length === 3) speed = 250;
+    if (snake.length <= 3) speed = 250;
     else if (snake.length === 5) speed = 225;
     else if (snake.length === 7) speed = 200;
     else if (snake.length === 9) speed = 175;
