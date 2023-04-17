@@ -217,7 +217,7 @@ function checkGameOver() {
             gameOver = true;
             if ((snake.length - 1) >= bestScore) {
                 bestScore = snake.length - 1;
-                bestScoreParagraph.textContent = "Best : " + bestScore.toString();
+                bestScoreParagraph.textContent = "Best score : " + bestScore.toString();
             }
         }
     }
