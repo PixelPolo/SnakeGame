@@ -1,2 +1,2 @@
 # SnakeGame
-JavaScriptSnakeGame
+Java Script Snake Game
